@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  flask-app:
+    build: .
+    container_name: flask-app
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://postgres:secret@db:5432/myapp
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - flask-app
+
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: myapp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
