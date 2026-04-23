@@ -22,7 +22,7 @@ def init_db():
 
 @app.route("/")
 def home():
-    return "<h1>Flask + Nginx + PostgreSQL on Docker!</h1>"
+    return "<h1>Auto-deployed by GitHub Actions!</h1>"
 
 @app.route("/add")
 def add_item():
